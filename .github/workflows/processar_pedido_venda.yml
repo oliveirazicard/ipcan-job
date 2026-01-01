@@ -1,0 +1,19 @@
+name: Cron - Processar Pedido Venda Omie
+
+on:
+  schedule:
+    - cron: '* * * * *'  # a cada 1 minuto
+  workflow_dispatch:     # permite rodar manualmente
+
+jobs:
+  call-edge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Chamar Edge processar_pedido_venda_omie
+        run: |
+          curl -s -X POST \
+            https://qxfaqtjlnskxozrywyku.functions.supabase.co/processar_pedido_venda_omie \
+            -H "Content-Type: application/json" \
+            -H "X-Internal-Token: ${{ secrets.IPCAN_INTERNAL_TOKEN }}" \
+            -d '{}'
